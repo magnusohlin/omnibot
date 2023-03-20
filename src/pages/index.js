@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
+import { v4 as uuidv4 } from 'uuid'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
@@ -38,7 +39,7 @@ export default function Home() {
   const handleButtonClick = async () => {
     setMessages((prevMessages) => [
       ...prevMessages,
-      { role: 'user', content: inputText },
+      { id: uuidv4(), role: 'user', content: inputText },
     ]);
     setInputText('');
 
@@ -72,7 +73,7 @@ export default function Home() {
 
       setMessages((prevMessages) => [
         ...prevMessages,
-        { role: 'assistant', content: JSON.stringify(apiResponse, null, 2) },
+        { id: uuidv4(), role: 'assistant', content: JSON.stringify(apiResponse, null, 2) },
       ]);
     } catch (error) {
       console.error("Error:", error);
@@ -95,7 +96,7 @@ export default function Home() {
           </div>
           <div className={styles.chatContainer}>
             {reversedMessages.map((message, index) => (
-              <div key={index} className={`${styles.messageContainer} ${styles[message.role]}`}>
+              <div key={message.id} className={`${styles.messageContainer} ${styles[message.role]}`}>
                 { message.role === 'assistant' && (
                   <div className={styles.messageAvatar}>
                     <Image src="/chatbot.svg" width="40" height="40" alt="Bot avatar" />
