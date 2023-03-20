@@ -79,6 +79,8 @@ export default function Home() {
     }
   };
 
+  const reversedMessages = messages.reverse()
+
   return (
     <>
       <Head>
@@ -92,7 +94,7 @@ export default function Home() {
             <span>✨ Create and find authors, books and more with </span><Image src="/chatbot.svg" width="40" height="40" alt="Bot avatar" /><span> Omnibot ✨</span>
           </div>
           <div className={styles.chatContainer}>
-            {messages.reverse().map((message, index) => (
+            {reversedMessages.map((message, index) => (
               <div key={index} className={`${styles.messageContainer} ${styles[message.role]}`}>
                 { message.role === 'assistant' && (
                   <div className={styles.messageAvatar}>
