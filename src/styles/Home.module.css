@@ -26,6 +26,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #1B1C1E;
 }
 
 .infoContainer img {
@@ -152,4 +153,40 @@
 
 .button:hover {
   background-color: #1666f2;
+}
+
+.dotTyping {
+  position: relative;
+  left: -9999px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #2A8BFB;
+  color: #2A8BFB;
+  box-shadow: 9984px 0 0 0 #2A8BFB, 9999px 0 0 0 #2A8BFB, 10014px 0 0 0 #2A8BFB;
+  animation: dot-typing 1.5s infinite linear;
+}
+
+@keyframes dot-typing {
+  0% {
+    box-shadow: 9984px 0 0 0 #2A8BFB, 9999px 0 0 0 #2A8BFB, 10014px 0 0 0 #2A8BFB;
+  }
+  16.667% {
+    box-shadow: 9984px -10px 0 0 #2A8BFB, 9999px 0 0 0 #2A8BFB, 10014px 0 0 0 #2A8BFB;
+  }
+  33.333% {
+    box-shadow: 9984px 0 0 0 #2A8BFB, 9999px 0 0 0 #2A8BFB, 10014px 0 0 0 #2A8BFB;
+  }
+  50% {
+    box-shadow: 9984px 0 0 0 #2A8BFB, 9999px -10px 0 0 #2A8BFB, 10014px 0 0 0 #2A8BFB;
+  }
+  66.667% {
+    box-shadow: 9984px 0 0 0 #2A8BFB, 9999px 0 0 0 #2A8BFB, 10014px 0 0 0 #2A8BFB;
+  }
+  83.333% {
+    box-shadow: 9984px 0 0 0 #2A8BFB, 9999px 0 0 0 #2A8BFB, 10014px -10px 0 0 #2A8BFB;
+  }
+  100% {
+    box-shadow: 9984px 0 0 0 #2A8BFB, 9999px 0 0 0 #2A8BFB, 10014px 0 0 0 #2A8BFB;
+  }
 }

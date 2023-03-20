@@ -9,6 +9,7 @@ export default function Home() {
   const [inputText, setInputText] = useState('');
   const [messages, setMessages] = useState([]);
   const [isFormActive, setIsFormActive] = useState(false);
+  const [showLoader, setShowLoader] = useState(false)
 
   const handleInputChange = (event) => {
     setInputText(event.target.value);
@@ -41,6 +42,7 @@ export default function Home() {
       ...prevMessages,
       { id: uuidv4(), role: 'user', content: inputText },
     ]);
+    setShowLoader(true)
     setInputText('');
 
     try {
@@ -66,21 +68,28 @@ export default function Home() {
       });
 
       const parsedCompletion = await completion.json(); // Await the result of completion.json()
-
       const rawApiResponse = JSON.parse(parsedCompletion.choices[0].message.content.trim()); // No need to parse, already a JSON object
-      const response = await axios.post("/api/process-api-response", rawApiResponse);
-      const apiResponse = response.data;
+      try {
+        const response = await axios.post("/api/process-api-response", rawApiResponse);
+        const apiResponse = response.data;
 
+        setShowLoader(false)
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { id: uuidv4(), role: 'assistant', content: JSON.stringify(apiResponse, null, 2) },
+        ]);
+      } catch (error) {
+        throw error
+      }
+    } catch (error) {
+      setShowLoader(false)
       setMessages((prevMessages) => [
         ...prevMessages,
-        { id: uuidv4(), role: 'assistant', content: JSON.stringify(apiResponse, null, 2) },
+        { id: uuidv4(), role: 'assistant', content: 'Something went wrong, try again...' },
       ]);
-    } catch (error) {
       console.error("Error:", error);
     }
   };
-
-  const reversedMessages = messages.reverse()
 
   return (
     <>
@@ -95,7 +104,17 @@ export default function Home() {
             <span>✨ Create and find authors, books and more with </span><Image src="/chatbot.svg" width="40" height="40" alt="Bot avatar" /><span> Omnibot ✨</span>
           </div>
           <div className={styles.chatContainer}>
-            {reversedMessages.map((message, index) => (
+            { showLoader && (
+              <div className={`${styles.messageContainer} ${styles.assistant}`}>
+                <div className={styles.messageAvatar}>
+                  <Image src="/chatbot.svg" width="40" height="40" alt="Bot avatar" />
+                </div>
+                <div className={styles.messageContent} style={{ minWidth: '60px', justifyContent: 'center' }}>
+                  <div className={styles.dotTyping} />
+                </div>
+              </div>
+            ) }
+            {messages.slice(0).reverse().map((message) => (
               <div key={message.id} className={`${styles.messageContainer} ${styles[message.role]}`}>
                 { message.role === 'assistant' && (
                   <div className={styles.messageAvatar}>
