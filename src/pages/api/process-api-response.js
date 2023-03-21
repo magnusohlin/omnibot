@@ -15,56 +15,61 @@ async function processApiResponse(apiResponse) {
   };
 
   switch (action) {
+    case 'generalQuestion':
+      return { data: data.answer }
+
     case 'createAuthor':
-      return await axios.post(`${apiBase}/authors`, data);
+      return await axios.post(`${apiBase}/authors`, { author: { name: data.name }});
 
     case 'deleteAuthor':
       const authorToDelete = await searchAuthorByName(data.name);
-      return await axios.delete(`${apiBase}/authors/${authorToDelete.id}`);
+      return await axios.delete(`${apiBase}/authors/${authorToDelete._id}`);
 
     case 'findAuthor':
-      return await axios.get(`${apiBase}/authors/search`, { params: data });
+      const author = await searchAuthorByName(data.name);
+      return { data: author }
 
     case 'getAuthor':
-      const authorToGet = await searchAuthorByName(data);
-      return await axios.get(`${apiBase}/authors/${authorToGet.id}`);
+      const authorToGet = await searchAuthorByName(data.name);
+      return await axios.get(`${apiBase}/authors/${authorToGet._id}`);
 
     case 'searchAuthors':
       return await axios.get(`${apiBase}/authors`, { params: data });
 
     case 'updateAuthor':
       const authorToUpdate = await searchAuthorByName(data.name);
-      return await axios.put(`${apiBase}/authors/${authorToUpdate.id}`, data);
+      console.log(data.updates)
+      return await axios.put(`${apiBase}/authors/${authorToUpdate._id}`, { author: { ...data.updates } });
 
     case 'addBookToAuthor':
       const authorToAddBook = await searchAuthorByName(data.name);
-      return await axios.post(`${apiBase}/authors/${authorToAddBook.id}/books`, { book: data.book });
+      return await axios.post(`${apiBase}/authors/${authorToAddBook._id}/books`, { book: data.books[0] });
 
     case 'addBooksToAuthor':
       const authorToAddBooks = await searchAuthorByName(data.name);
-      return await axios.post(`${apiBase}/authors/${authorToAddBooks.id}/books/batch`, { books: data.books });
+      return await axios.post(`${apiBase}/authors/${authorToAddBooks._id}/books/batch`, { books: data.books });
 
     case 'findBook':
-      return await axios.get(`${apiBase}/books/search`, { params: data });
+      return await axios.get(`${apiBase}/books/search`, { params: { name: data.title } });
 
     case 'getBook':
-      const bookToGet = await axios.get(`${apiBase}/books/search`, { params: { title: data.title } });
-      return await axios.get(`${apiBase}/books/${bookToGet.data[0].id}`);
+      const bookToGet = await axios.get(`${apiBase}/books/search`, { params: { name: data.title } });
+      return await axios.get(`${apiBase}/books/${bookToGet.data[0]._id}`);
 
     case 'removeBooksFromAuthor':
       const authorToRemoveBooks = await searchAuthorByName(data.authorName);
-      return await axios.delete(`${apiBase}/authors/${authorToRemoveBooks.id}/books`, { params: data });
+      return await axios.delete(`${apiBase}/authors/${authorToRemoveBooks._id}/books`, { params: data });
 
     case 'searchBooks':
       return await axios.get(`${apiBase}/books`, { params: data });
 
     case 'getBooksForAuthor':
       const authorToGetBooks = await searchAuthorByName(data.name);
-      return await axios.get(`${apiBase}/authors/${authorToGetBooks.id}/books`);
+      return await axios.get(`${apiBase}/authors/${authorToGetBooks._id}/books`);
 
     case 'updateBook':
-      const bookToUpdate = await axios.get(`${apiBase}/books/search`, { params: { title: data.title } });
-      return await axios.put(`${apiBase}/books/${bookToUpdate.data[0].id}`, data);
+      const bookToUpdate = await axios.get(`${apiBase}/books/search`, { params: { name: data.title } });
+      return await axios.put(`${apiBase}/books/${bookToUpdate.data[0]._id}`, { book: data.books[0] });
 
     default:
       throw new Error(`Unsupported action: ${action}`);

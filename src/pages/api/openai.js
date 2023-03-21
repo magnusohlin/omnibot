@@ -14,7 +14,7 @@ export default async function handler(req, res) {
       const completion = await openai.createChatCompletion({
         model: "gpt-4",
         messages,
-        max_tokens: 150,
+        max_tokens: 350,
         n: 1,
         stop: null,
         temperature: 0.5,

@@ -38,9 +38,10 @@ export default function Home() {
   };
 
   const handleButtonClick = async () => {
+    const userMesage = { id: uuidv4(), role: 'user', content: inputText }
     setMessages((prevMessages) => [
       ...prevMessages,
-      { id: uuidv4(), role: 'user', content: inputText },
+      userMesage,
     ]);
     setShowLoader(true)
     setInputText('');
@@ -55,10 +56,15 @@ export default function Home() {
           messages: [
             {
               role: "system",
-              content:
-                'You are a helpful assistant that can understand user input and generate JSON data to interact with a CRUD API. Given a user input, generate a JSON response in the format { "action": "<api_action>", "data": { ...<api_data> } }. Where API data is your best guess of any or multiple of { title: String, name: String, books: Array }. Supported actions include: "createAuthor", "deleteAuthor", "findAuthor", "getAuthor", "searchAuthors", "updateAuthor", "addBookToAuthor", "addBooksToAuthor", "findBook", "getBook", "removeBooksFromAuthor", "searchBooks", "getBooksForAuthor", and "updateBook".'
+              content:`
+                You are a helpful assistant that can understand user input and generate JSON data to interact with a CRUD API.
+                Given a user input, generate a JSON response in the format { "action": "<api_action>", "data": { ...<api_data> } }.
+                Where API data is your best guess of any or multiple of { title: String, name: String, books: ArrayOfObjectsWithNameKeyAndValue, updates: { name: String } }.
+
+                Supported actions include: "createAuthor", "deleteAuthor", "findAuthor", "getAuthor", "searchAuthors", "updateAuthor", "addBookToAuthor", "addBooksToAuthor", "findBook", "getBook", "removeBooksFromAuthor", "searchBooks", "getBooksForAuthor", and "updateBook".
+                If the input is a general question not related to the CRUD API, you should return a full answer completion on the format { "action": "generalQuestion", "data": { answer: <open_ai_completion> } }
+              `
             },
-            ...messages,
             {
               role: "user",
               content: inputText,
@@ -69,8 +75,10 @@ export default function Home() {
 
       const parsedCompletion = await completion.json(); // Await the result of completion.json()
       const rawApiResponse = JSON.parse(parsedCompletion.choices[0].message.content.trim()); // No need to parse, already a JSON object
+      console.log(rawApiResponse)
       try {
         const response = await axios.post("/api/process-api-response", rawApiResponse);
+        console.log(response)
         const apiResponse = response.data;
 
         setShowLoader(false)
