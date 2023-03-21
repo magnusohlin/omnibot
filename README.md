@@ -1,38 +1,69 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Omnibot POC
+
+Omnibot POC is a proof-of-concept intelligent and interactive assistant built with OpenAI and Next.js. It demonstrates the capabilities of an AI-driven assistant in understanding and processing natural language inputs to interact with a CRUD API.
+
+![Screenshot 2023-03-21 at 14 52 00](https://user-images.githubusercontent.com/521837/226628331-3855f074-0a31-451c-b30e-4271c6ff5e38.png)
 
 ## Getting Started
 
-First, run the development server:
+Follow these steps to get the project up and running on your local machine.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+### Prerequisites
+
+- Node.js (v12.x or later)
+- Yarn (optional, but recommended)
+
+### Installation
+
+1. Clone the repository:
+
+```
+git clone https://github.com/yourusername/omnibot-poc.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+```
+cd omnibot-poc
+npm install
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+or
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```
+cd omnibot-poc
+yarn
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+3. Create a `.env.local` file in the root directory and add your OpenAI API key:
 
-## Learn More
+```
+OPENAI_API_KEY=your_openai_api_key_here
+```
 
-To learn more about Next.js, take a look at the following resources:
+4. Start the development server:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+or
 
-## Deploy on Vercel
+```
+yarn dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. Open your browser and navigate to http://localhost:3000 to access the application.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Usage
+
+Enter your natural language queries or commands in the input field and click the "Send" button. The AI assistant will process the input and display the corresponding JSON data for interacting with the CRUD API.
+
+## Contributing
+
+Feel free to submit issues and pull requests for improvements or new features. We appreciate your help in making this project better.
+
+## License
+
+This project is licensed under the MIT License.
+</pre>
