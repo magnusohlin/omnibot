@@ -38,7 +38,6 @@ async function processApiResponse(apiResponse) {
 
     case 'updateAuthor':
       const authorToUpdate = await searchAuthorByName(data.name);
-      console.log(data.updates)
       return await axios.put(`${apiBase}/authors/${authorToUpdate._id}`, { author: { ...data.updates } });
 
     case 'addBookToAuthor':

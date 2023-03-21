@@ -130,7 +130,7 @@ export default function Home() {
                   </div>
                 ) }
                 <div className={styles.messageContent}>
-                  {message.content}
+                  <div><pre className={styles.messageText}>{message.content}</pre></div>
                 </div>
               </div>
             ))}
