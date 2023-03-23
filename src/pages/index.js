@@ -3,6 +3,7 @@ import axios from 'axios'
 import { v4 as uuidv4 } from 'uuid'
 import Head from 'next/head'
 import Image from 'next/image'
+import MessageContent from '../../components/message-content/message-content'
 import styles from '@/styles/Home.module.css'
 
 export default function Home() {
@@ -61,7 +62,7 @@ export default function Home() {
                 Given a user input, generate a JSON response in the format { "action": "<api_action>", "data": { ...<api_data> } }.
                 Where API data is your best guess of any or multiple of { title: String, name: String, books: ArrayOfObjectsWithNameKeyAndValue, updates: { name: String } }.
 
-                Supported actions include: "createAuthor", "deleteAuthor", "findAuthor", "getAuthor", "searchAuthors", "updateAuthor", "addBookToAuthor", "addBooksToAuthor", "findBook", "getBook", "removeBooksFromAuthor", "searchBooks", "getBooksForAuthor", and "updateBook".
+                Supported actions include: "reportAuthors", "createAuthor", "deleteAuthor", "findAuthor", "getAuthor", "searchAuthors", "updateAuthor", "addBookToAuthor", "addBooksToAuthor", "findBook", "getBook", "removeBooksFromAuthor", "searchBooks", "getBooksForAuthor", and "updateBook".
                 If the input is a general question not related to the CRUD API, you should return a full answer completion on the format { "action": "generalQuestion", "data": { answer: <open_ai_completion> } }
               `
             },
@@ -84,7 +85,7 @@ export default function Home() {
         setShowLoader(false)
         setMessages((prevMessages) => [
           ...prevMessages,
-          { id: uuidv4(), role: 'assistant', content: JSON.stringify(apiResponse, null, 2) },
+          { id: uuidv4(), role: 'assistant', type: apiResponse.type, content: JSON.stringify(apiResponse.data, null, 2) },
         ]);
       } catch (error) {
         throw error
@@ -129,9 +130,7 @@ export default function Home() {
                     <Image src="/chatbot.svg" width="40" height="40" alt="Bot avatar" />
                   </div>
                 ) }
-                <div className={styles.messageContent}>
-                  <div><pre className={styles.messageText}>{message.content}</pre></div>
-                </div>
+                <MessageContent type={message.type} content={message.content} />
               </div>
             ))}
             <div className={`${styles.messageContainer} ${styles.assistant} ${styles.inSeq}`}>
