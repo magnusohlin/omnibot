@@ -1,0 +1,32 @@
+@value assistant from "../../src/styles/Home.module.css";
+@value user from "../../src/styles/Home.module.css";
+
+.messageText {
+  color: #1B1C1E;
+  font-size: 16px;
+  font-family: var(--font-default);
+  white-space: pre-wrap;
+}
+
+.messageContent {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 12px 10px;
+  gap: 10px;
+  color: #1B1C1E;
+}
+
+.assistant .messageContent {
+  border-radius: 12px 12px 0px 12px;
+  background: #EEF9F4;
+}
+
+.user .messageContent {
+  background: #F1F5F8;
+  border-radius: 12px 12px 12px 0px;
+}
+
+.chart {
+  width: 100%;
+}

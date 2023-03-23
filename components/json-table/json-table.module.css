@@ -1,0 +1,24 @@
+/* JsonTable.module.css */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableHeader {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ccc;
+  background-color: #f3f3f3;
+}
+
+.tableCell {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ccc;
+}
+
+.list {
+  list-style-position: inside;
+  padding: 0;
+  margin: 0;
+}
