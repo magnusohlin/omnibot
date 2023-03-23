@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Card.module.css';
+import styles from './card.module.css';
 
 const Card = ({ content }) => {
   const entries = Object.entries(content);
