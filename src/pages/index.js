@@ -76,10 +76,8 @@ export default function Home() {
 
       const parsedCompletion = await completion.json(); // Await the result of completion.json()
       const rawApiResponse = JSON.parse(parsedCompletion.choices[0].message.content.trim()); // No need to parse, already a JSON object
-      console.log(rawApiResponse)
       try {
         const response = await axios.post("/api/process-api-response", rawApiResponse);
-        console.log(response)
         const apiResponse = response.data;
 
         setShowLoader(false)
