@@ -13,7 +13,6 @@ const prepareChartData = (data) => {
 
 const Chart = ({ data }) => {
   const chartData = prepareChartData(data);
-  console.log(chartData)
   const xAxisKey = 'name';
   const yAxisKey = 'books';
 
